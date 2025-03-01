@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Animator - Retro Computing Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="control-panel" id="controlPanel">
+        <div class="panel-header" id="panelHeader">
+            SYSTEM CONTROLS
+            <span id="collapseButton">&#x25B2;</span>
+        </div>
+        <div class="panel-content" id="panelContent">
+            <div class="panel-section">
+                <div class="control-group">
+                    <label>INPUT TEXT:</label>
+                    <textarea id="inputText" class="retro-input" rows="2">BOXY®</textarea>
+                </div>
+                <div class="control-group">
+                    <label>DISPLAY FONT:</label>
+                    <select id="fontSelect" class="retro-select">
+                        <option value="VT323">VT323</option>
+                        <option value="Share Tech Mono">Share Tech Mono</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Consolas">Consolas</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                        <option value="Arial Black">Arial Black</option>
+                        <option value="chaotic">Chaotic Personalizado</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>SCALE: <span id="fontSizeValue">48</span>px</label>
+                    <input type="range" id="fontSizeSlider" class="retro-range" min="12" max="120" value="48">
+                </div>
+                <div class="control-group colors">
+                    <div class="color-with-hex">
+                        <label>TEXT COLOR:</label>
+                        <div class="color-input-group">
+                            <input type="color" id="textColor" class="retro-color" value="#00ff00">
+                            <input type="text" id="textColorHex" class="retro-input hex-input" value="#00ff00">
+                        </div>
+                    </div>
+                    <div class="color-with-hex">
+                        <label>BACKGROUND:</label>
+                        <div class="color-input-group">
+                            <input type="color" id="backgroundColor" class="retro-color" value="#000000">
+                            <input type="text" id="backgroundColorHex" class="retro-input hex-input" value="#000000">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>ANIMATION MODE:</label>
+                    <select id="animationSelect" class="retro-select">
+                        <option value="none">Static Display</option>
+                        <option value="wave">Signal Wave</option>
+                        <option value="matrix">Digital Rain</option>
+                        <option value="matrixCode">Clean Data Stream</option>
+                        <option value="typewriter">Typewritting</option>
+                        <option value="pixelate">Pixelate</option>
+                        <option value="chaotic">Neon Pulse</option>
+                        <option value="pulse">Pulse Effect</option>
+                        <option value="glitch">Simple Glitch</option>
+                        <option value="rotate">Rotation</option>
+                        <option value="dvd">DVD Bounce</option>
+                    </select>
+                </div>
+                <div class="animation-controls" id="animationControls">
+                    <div class="control-group">
+                        <label>SPEED: <span id="animationSpeedValue">5</span></label>
+                        <input type="range" id="animationSpeedSlider" class="retro-range" min="1" max="10" value="5">
+                    </div>
+                    <div class="control-group">
+                        <label>INTENSITY: <span id="animationIntensityValue">10</span></label>
+                        <input type="range" id="animationIntensitySlider" class="retro-range" min="1" max="20" value="10">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>TEXT MULTIPLIER:</label>
+                    <input type="number" id="textMultiplierInput" class="retro-input" min="1" max="10" value="1">
+                </div>
+                <div class="control-group">
+                    <label>GLOBAL INTENSITY: <span id="globalIntensityValue">1</span></label>
+                    <input type="range" id="globalIntensitySlider" class="retro-range" min="0" max="10" value="1">
+                </div>
+                <div class="control-group checkbox-group">
+                    <label>SCANLINES:</label>
+                    <input type="checkbox" id="scanlinesCheckbox" class="retro-checkbox" checked>
+                </div>
+                <div class="control-group checkbox-group">
+                    <label>RETRO SCAN:</label>
+                    <input type="checkbox" id="vhsLinesCheckbox" class="retro-checkbox">
+                </div>
+                <div class="control-group checkbox-group">
+                    <label>RETRO GLOW:</label>
+                    <input type="checkbox" id="retroGlowCheckbox" class="retro-checkbox">
+                </div>
+                <div class="control-group">
+                    <label>THEME:</label>
+                    <select id="themeSelect" class="retro-select">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+                <div class="export-controls">
+                    <button class="retro-button" id="captureButton">CAPTURE SCREEN</button>
+                    <div class="export-options">
+                        <button class="retro-button" id="exportGifButton">EXPORT GIF</button>
+                        <button class="retro-button" id="exportMp4Button">EXPORT MP4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="app-container">
+        <div class="display-area">
+            <div class="canvas-container">
+                <div class="screen-overlay"></div>
+                <canvas id="textCanvas" class="main-canvas"></canvas>
+                <div class="scan-line"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+    <script src="core.js" type="module"></script>
+    <script src="effects.js" type="module"></script>
+    <script src="input.js" type="module"></script>
+    <script src="theme.js" type="module"></script>
+    <script src="export.js" type="module"></script>
+</body>
+</html> 
