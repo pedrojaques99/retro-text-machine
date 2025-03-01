@@ -20,6 +20,7 @@ const globalIntensityValue = document.getElementById('globalIntensityValue');
 const scanlinesCheckbox = document.getElementById('scanlinesCheckbox');
 const vhsLinesCheckbox = document.getElementById('vhsLinesCheckbox');
 const retroGlowCheckbox = document.getElementById('retroGlowCheckbox');
+const randomButton = document.getElementById('randomButton');
 
 let isDragging = false;
 let offsetX, offsetY;
@@ -143,6 +144,11 @@ function initInputHandlers() {
         updateSettings();
     });
 
+    // Add random button handler
+    randomButton.addEventListener('click', () => {
+        randomizeSettings();
+    });
+
     panelHeader.addEventListener('mousedown', (e) => {
         isDragging = true;
         offsetX = e.clientX - controlPanel.offsetLeft;
@@ -165,6 +171,84 @@ function initInputHandlers() {
         panelContent.classList.toggle('collapsed');
         collapseButton.innerText = panelContent.classList.contains('collapsed') ? '▶' : '▲';
     });
+}
+
+// Function to randomize animation settings
+function randomizeSettings() {
+    // Random animation
+    const animations = Array.from(animationSelect.options).map(option => option.value);
+    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+    animationSelect.value = randomAnimation;
+    
+    // Random font
+    const fonts = Array.from(fontSelect.options).map(option => option.value);
+    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+    fontSelect.value = randomFont;
+    
+    // Random font size (between 24 and 72)
+    const randomFontSize = Math.floor(Math.random() * 48) + 24;
+    fontSizeSlider.value = randomFontSize;
+    fontSizeValue.innerText = randomFontSize;
+    
+    // Random text color
+    const randomTextColor = getRandomColor();
+    textColor.value = randomTextColor;
+    textColorHex.value = randomTextColor;
+    
+    // Random background color
+    const randomBgColor = getRandomColor();
+    backgroundColor.value = randomBgColor;
+    backgroundColorHex.value = randomBgColor;
+    
+    // Random animation speed (between 3 and 8)
+    const randomSpeed = Math.floor(Math.random() * 6) + 3;
+    animationSpeedSlider.value = randomSpeed;
+    animationSpeedValue.innerText = randomSpeed;
+    
+    // Random animation intensity (between 5 and 15)
+    const randomIntensity = Math.floor(Math.random() * 11) + 5;
+    animationIntensitySlider.value = randomIntensity;
+    animationIntensityValue.innerText = randomIntensity;
+    
+    // Random text multiplier (between 1 and 3)
+    const randomMultiplier = Math.floor(Math.random() * 3) + 1;
+    textMultiplierInput.value = randomMultiplier;
+    
+    // Random global intensity (between 1 and 8)
+    const randomGlobalIntensity = Math.floor(Math.random() * 8) + 1;
+    globalIntensitySlider.value = randomGlobalIntensity;
+    globalIntensityValue.innerText = randomGlobalIntensity;
+    
+    // Random effects (50% chance for each)
+    scanlinesCheckbox.checked = Math.random() > 0.5;
+    vhsLinesCheckbox.checked = Math.random() > 0.5;
+    retroGlowCheckbox.checked = Math.random() > 0.5;
+    
+    // Show animation controls if needed
+    if (randomAnimation === 'none') {
+        animationControls.style.display = 'none';
+    } else {
+        animationControls.style.display = 'flex';
+    }
+    
+    // Update settings
+    updateSettings();
+    
+    // Add a visual feedback for the randomize action
+    randomButton.classList.add('active');
+    setTimeout(() => {
+        randomButton.classList.remove('active');
+    }, 300);
+}
+
+// Helper function to generate random colors
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
 
 initInputHandlers(); 

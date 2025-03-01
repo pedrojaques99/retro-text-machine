@@ -160,18 +160,16 @@ function renderPixelateEffect(ctx, centerX, centerY, time, settings) {
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
     
-    // Calculate horizontal movement (infinite scroll to the left)
-    const scrollSpeed = settings.animationSpeed * 30; // Adjust speed based on animation speed setting
-    const scrollOffset = -(time * scrollSpeed) % (offscreenCanvas.width * 2);
-    
-    // Draw the text multiple times to create continuous scrolling effect
-    for (let i = -1; i <= multiplier + 1; i++) {
-        const x = offscreenCanvas.width / 2 + scrollOffset + (i * textWidth * 1.5);
-        const y = offscreenCanvas.height / 2;
-        offCtx.fillText(text, x, y);
+    // Draw the text in the center of the canvas
+    for (let m = 0; m < multiplier; m++) {
+        for (let n = 0; n < multiplier; n++) {
+            const x = offscreenCanvas.width / 2 + (m - (multiplier - 1) / 2) * textWidth * 1.2;
+            const y = offscreenCanvas.height / 2 + (n - (multiplier - 1) / 2) * textHeight * 1.5;
+            offCtx.fillText(text, x, y);
+        }
     }
     
-    // Apply fixed pixelation effect (no animation in the pixel size)
+    // Apply fixed pixelation effect
     const pixelSize = Math.max(2, Math.min(10, settings.animationIntensity / 2)); // Fixed pixel size based on intensity
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = offscreenCanvas.width;
@@ -188,6 +186,36 @@ function renderPixelateEffect(ctx, centerX, centerY, time, settings) {
     const x = centerX - offscreenCanvas.width / 2;
     const y = centerY - offscreenCanvas.height / 2;
     ctx.drawImage(tempCanvas, x, y);
+}
+
+function renderLeftMoveEffect(ctx, centerX, centerY, time, settings) {
+    const multiplier = settings.textMultiplier || 1;
+    const text = settings.text;
+    const fontSize = parseInt(settings.fontSize);
+    const textWidth = ctx.measureText(text).width;
+    const textHeight = fontSize;
+    
+    // Calculate canvas width for scrolling
+    const canvasWidth = ctx.canvas.width;
+    
+    // Calculate scrolling speed based on animation speed setting
+    const scrollSpeed = settings.animationSpeed * 50;
+    
+    // Calculate scroll position
+    const scrollOffset = -(time * scrollSpeed) % (textWidth * 2);
+    
+    // Draw the text multiple times to create continuous scrolling effect
+    for (let i = -2; i <= Math.ceil(canvasWidth / textWidth) + 2; i++) {
+        const x = centerX + scrollOffset + (i * textWidth * 1.2);
+        
+        // Only draw if the text would be visible on screen
+        if (x > -textWidth && x < canvasWidth + textWidth) {
+            for (let n = 0; n < multiplier; n++) {
+                const y = centerY + (n - (multiplier - 1) / 2) * textHeight * 1.5;
+                ctx.fillText(text, x, y);
+            }
+        }
+    }
 }
 
 function renderChaoticEffect(ctx, centerX, centerY, time, settings) {
@@ -429,5 +457,6 @@ export {
     renderPulseEffect,
     renderSimpleGlitchEffect,
     renderRotationEffect,
-    renderDVDBounceEffect
+    renderDVDBounceEffect,
+    renderLeftMoveEffect
 };

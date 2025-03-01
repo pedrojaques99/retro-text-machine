@@ -12,41 +12,6 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-body.light-mode {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-body.light-mode .retro-input,
-body.light-mode .retro-select,
-body.light-mode .retro-range,
-body.light-mode .retro-color {
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
-}
-
-body.light-mode .retro-button {
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
-}
-
-body.light-mode .retro-button:hover {
-    background-color: #ddd;
-    color: #333;
-}
-
-body.light-mode .panel-header {
-    background-color: #ddd;
-    color: #333;
-    border-bottom: 1px solid #ccc;
-}
-
-body.light-mode .control-panel {
-    background-color: #eee;
-}
-
 .app-container {
     width: 100%;
     height: 100vh;
@@ -294,6 +259,42 @@ body.light-mode .control-panel {
     box-shadow: 0 0 8px rgba(0, 255, 0, 0.3); /* More subtle hover shadow */
 }
 
+.retro-button.active {
+    background-color: #00ff00;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+    transform: scale(1.05);
+}
+
+/* Random button specific styling */
+#randomButton {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #333;
+    border-color: #00ff00;
+    position: relative;
+    overflow: hidden;
+}
+
+#randomButton:hover {
+    background-color: #444;
+}
+
+#randomButton:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+#randomButton:hover:before {
+    left: 100%;
+}
+
 /* Hide animation controls when animation is none */
 #animationControls {
     display: flex;
@@ -376,13 +377,4 @@ body.light-mode .control-panel {
 
 .retro-checkbox:focus {
     box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
-}
-
-body.light-mode .retro-checkbox {
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-
-body.light-mode .retro-checkbox:checked::after {
-    color: #333;
 } 

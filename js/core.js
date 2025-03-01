@@ -12,7 +12,8 @@ import {
     renderPulseEffect,
     renderSimpleGlitchEffect,
     renderRotationEffect,
-    renderDVDBounceEffect
+    renderDVDBounceEffect,
+    renderLeftMoveEffect
 } from './effects.js';
 
 const primaryColor = '#d1d1d1';
@@ -112,6 +113,9 @@ function renderCanvas() {
             break;
         case 'dvd':
             renderDVDBounceEffect(ctx, centerX, centerY, time, settings);
+            break;
+        case 'leftMove':
+            renderLeftMoveEffect(ctx, centerX, centerY, time, settings);
             break;
         default:
             renderStaticText(ctx, centerX, centerY, settings);
