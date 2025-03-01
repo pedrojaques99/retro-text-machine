@@ -151,21 +151,28 @@ function renderPixelateEffect(ctx, centerX, centerY, time, settings) {
     offscreenCanvas.height = textHeight * 1.5 * multiplier;
     const offCtx = offscreenCanvas.getContext('2d');
     
-    // Render the multiplied text
-    for (let m = 0; m < multiplier; m++) {
-        for (let n = 0; n < multiplier; n++) {
-            const x = offscreenCanvas.width / 2 + (m - (multiplier - 1) / 2) * textWidth * 1.2;
-            const y = offscreenCanvas.height / 2 + (n - (multiplier - 1) / 2) * textHeight * 1.5;
-            offCtx.font = `${fontSize}px ${settings.fontFamily}`;
-            offCtx.fillStyle = settings.textColor;
-            offCtx.textAlign = 'center';
-            offCtx.textBaseline = 'middle';
-            offCtx.fillText(text, x, y);
-        }
+    // Clear the offscreen canvas
+    offCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+    
+    // Render the text
+    offCtx.font = `${fontSize}px ${settings.fontFamily}`;
+    offCtx.fillStyle = settings.textColor;
+    offCtx.textAlign = 'center';
+    offCtx.textBaseline = 'middle';
+    
+    // Calculate horizontal movement (infinite scroll to the left)
+    const scrollSpeed = settings.animationSpeed * 30; // Adjust speed based on animation speed setting
+    const scrollOffset = -(time * scrollSpeed) % (offscreenCanvas.width * 2);
+    
+    // Draw the text multiple times to create continuous scrolling effect
+    for (let i = -1; i <= multiplier + 1; i++) {
+        const x = offscreenCanvas.width / 2 + scrollOffset + (i * textWidth * 1.5);
+        const y = offscreenCanvas.height / 2;
+        offCtx.fillText(text, x, y);
     }
     
-    // Apply pixelation effect
-    const pixelSize = 3 + Math.sin(time * 3) * 2;
+    // Apply fixed pixelation effect (no animation in the pixel size)
+    const pixelSize = Math.max(2, Math.min(10, settings.animationIntensity / 2)); // Fixed pixel size based on intensity
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = offscreenCanvas.width;
     tempCanvas.height = offscreenCanvas.height;
@@ -173,7 +180,7 @@ function renderPixelateEffect(ctx, centerX, centerY, time, settings) {
     
     // Draw at a lower resolution
     tempCtx.drawImage(offscreenCanvas, 0, 0, offscreenCanvas.width / pixelSize, offscreenCanvas.height / pixelSize);
-    // Scale back up
+    // Scale back up with pixelated rendering
     tempCtx.imageSmoothingEnabled = false;
     tempCtx.drawImage(tempCanvas, 0, 0, offscreenCanvas.width / pixelSize, offscreenCanvas.height / pixelSize, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
     
