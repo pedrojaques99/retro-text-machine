@@ -52,20 +52,10 @@ Retro Text Machine is a creative tool that allows you to generate nostalgic, ret
 1. Clone the repository:
    ```
    git clone https://github.com/yourusername/retro-text-machine.git
-   cd retro-text-machine/text-animator-2
+   cd retro-text-machine
    ```
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
-
-3. Start the development server:
-   ```
-   npm run dev
-   ```
-
-4. Open your browser and navigate to the local development server (typically http://localhost:5173)
+2. No installation needed! Simply open the index.html file in your browser to start using the application.
 
 ### Usage
 
@@ -84,7 +74,11 @@ The project is built using:
 - HTML5 Canvas for rendering
 - Vanilla JavaScript for animations and effects
 - CSS for styling
-- Vite as the build tool
+
+If you want to modify the code:
+
+1. Make your changes to the HTML, CSS, or JavaScript files
+2. Refresh your browser to see the changes
 
 ## License
 
