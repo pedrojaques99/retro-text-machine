@@ -2,8 +2,6 @@
 
 A web-based text animation tool that creates retro computing-style text effects and animations.
 
-![Retro Text Machine](https://via.placeholder.com/800x400?text=Retro+Text+Machine)
-
 ## Overview
 
 Retro Text Machine is a creative tool that allows you to generate nostalgic, retro-computing style text animations. Perfect for creating eye-catching titles, logos, or visual elements for your projects with a vintage computing aesthetic.
